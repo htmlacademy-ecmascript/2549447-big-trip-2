@@ -1,7 +1,7 @@
 # Проект «Большое путешествие»
 
 * Студент: [Олег Сулицкий](https://up.htmlacademy.ru/ecmascript-individual/2/user/2549447).
-* Наставник: `Неизвестно`.
+* Наставник: [Александр Сударев](https://htmlacademy.ru/profile/id1152185).
 
 ---
 
