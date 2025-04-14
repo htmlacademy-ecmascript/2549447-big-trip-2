@@ -1,7 +1,7 @@
-import { createElement } from '../render.js';
-import { humanizeDateTimeEdit } from '../utils.js';
+import AbstractView from '../framework/view/abstract-view.js';
+import { humanizeDateTimeEdit } from '../utils/point.js';
 
-function createEditPointTemplate(point, offers, destination) {
+function createEditPointTemplate(point, offersByType, destination) {
   const { type, basePrice, dateFrom, dateTo } = point;
   const { name, descriptionPlace, pictures } = destination;
 
@@ -107,10 +107,10 @@ function createEditPointTemplate(point, offers, destination) {
     </header>
 
     <section class="event__details">
-      ${ offers.offers.length > 0 ? `<section class="event__section  event__section--offers">
+      ${ offersByType.offers.length > 0 ? `<section class="event__section  event__section--offers">
         <h3 class="event__section-title  event__section-title--offers">Offers</h3>
         <div class="event__available-offers">
-          ${ offers.offers.map(({ title, price, id }) => `<div class="event__offer-selector">
+          ${ offersByType.offers.map(({ title, price, id }) => `<div class="event__offer-selector">
           <input class="event__offer-checkbox  visually-hidden" id="event-offer-luggage-1" type="checkbox" name="event-offer-luggage" ${isChecked(point.offers, id) ? 'checked' : ''}>
             <label class="event__offer-label" for="event-offer-luggage-1">
               <span class="event__offer-title">${ title }</span>
@@ -134,26 +134,31 @@ function createEditPointTemplate(point, offers, destination) {
   </form></li>`;
 }
 
-export default class EditPointView {
-  constructor ({ point, offers, destination }) {
-    this.point = point;
-    this.offers = offers;
-    this.destination = destination;
+export default class EditPointView extends AbstractView {
+  #point = null;
+  #offersByType = null;
+  #destination = null;
+  #handleEditClick = null;
+
+  constructor ({ point, offersByType, destination, onEditClick }) {
+    super();
+    this.#point = point;
+    this.#offersByType = offersByType;
+    this.#destination = destination;
+    this.#handleEditClick = onEditClick;
+
+    this.element.querySelector('.event__rollup-btn')
+      .addEventListener('click', this.#editClickHandler);
+    this.element.querySelector('form')
+      .addEventListener('submit', this.#editClickHandler);
   }
 
-  getTemplate() {
-    return createEditPointTemplate(this.point, this.offers, this.destination);
+  get template() {
+    return createEditPointTemplate(this.#point, this.#offersByType, this.#destination);
   }
 
-  getElement() {
-    if (!this.element) {
-      this.element = createElement(this.getTemplate());
-    }
-
-    return this.element;
-  }
-
-  removeElement() {
-    this.element = null;
-  }
+  #editClickHandler = (evt) => {
+    evt.preventDefault();
+    this.#handleEditClick();
+  };
 }
