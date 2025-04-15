@@ -6,10 +6,6 @@ const DATE_TIME_FORMAT = 'Y-m-dTH:i';
 const DATE_YEAR_FORMAT = 'Y-m-d';
 const DATE_TIME_FORMAT_EDIT = 'y/m/d H:i';
 
-function getRandomArrayElement(items) {
-  return items[Math.floor(Math.random() * items.length)];
-}
-
 function humanizePointTime(dueDate) {
   return dueDate ? flatpickr.formatDate(new Date(dueDate), TIME_FORMAT) : '';
 }
@@ -45,4 +41,4 @@ function msToTime(duration) {
   return `${ days }${ hours }${ minutes }`;
 }
 
-export { getRandomArrayElement, humanizePointTime, humanizePointDate, humanizeDateTime, humanizeDateYear,humanizeDateTimeEdit, msToTime };
+export { humanizePointTime, humanizePointDate, humanizeDateTime, humanizeDateYear,humanizeDateTimeEdit, msToTime };

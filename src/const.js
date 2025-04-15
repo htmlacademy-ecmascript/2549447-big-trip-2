@@ -1,4 +1,4 @@
-const TRIP_POINT_CONUT = 4;
+const TRIP_POINT_CONUT = 10;
 
 export {
   TRIP_POINT_CONUT
