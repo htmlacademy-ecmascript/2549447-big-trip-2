@@ -4,6 +4,7 @@ import EditPointView from '../view/edit-point-view.js';
 import TripPointView from '../view/trip-point-view.js';
 import EmptyPointsListView from '../view/empty-points-list-view.js';
 import { render, replace } from '../framework/render.js';
+import { generateSortItem } from '../mock/sort.js';
 
 export default class TripEventsPresenter {
   #tripEventsContainer = null;
@@ -70,7 +71,9 @@ export default class TripEventsPresenter {
       return;
     }
 
-    render(new ListSortView(), this.#tripEventsContainer);
+    const sortItems = generateSortItem(this.#tripPointsList);
+
+    render(new ListSortView({sortItems}), this.#tripEventsContainer);
     render(this.#tripPointListComponent, this.#tripEventsContainer);
 
     for (let i = 0; i < this.#tripPointsList.length; i++) {
