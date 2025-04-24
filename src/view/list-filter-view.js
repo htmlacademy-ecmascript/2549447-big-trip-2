@@ -11,7 +11,7 @@ function createFilterTemplate(filter, isChecked) {
         name="trip-filter"
         value="${ type }"
         ${isChecked ? 'checked' : ''}
-        ${count === 0 ? 'checked' : ''}
+        ${count === 0 ? 'disabled' : ''}
       />
       <label class="trip-filters__filter-label" for="filter-everything">${ type }</label>
     </div>`;

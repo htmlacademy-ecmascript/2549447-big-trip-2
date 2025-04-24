@@ -1,12 +1,15 @@
+import ListFilterView from '../view/list-filter-view.js';
+import { generateFilter } from '../mock/filter.js';
 import ListSortView from '../view/list-sort-view.js';
 import TripPointListView from '../view/trip-point-list-view.js';
-import EditPointView from '../view/edit-point-view.js';
-import TripPointView from '../view/trip-point-view.js';
 import EmptyPointsListView from '../view/empty-points-list-view.js';
-import { render, replace } from '../framework/render.js';
+import { render } from '../framework/render.js';
 import { generateSortItem } from '../mock/sort.js';
+import TripEventPresenter from './trip-event-presenter.js';
 
 export default class TripEventsPresenter {
+  #tripMainElement = document.querySelector('.trip-main');
+  #tripContolsFiltersElement = this.#tripMainElement.querySelector('.trip-controls__filters');
   #tripEventsContainer = null;
   #tripPointsModel = null;
 
@@ -14,55 +17,24 @@ export default class TripEventsPresenter {
 
   #tripPointsList = [];
 
+  #pointPresentersList = new Map();
+
   constructor({tripEventsContainer, tripPointsModel}) {
     this.#tripEventsContainer = tripEventsContainer;
     this.#tripPointsModel = tripPointsModel;
   }
 
   init() {
+    this.#renderFilters();
+
     this.#tripPointsList = [...this.#tripPointsModel.tripPoints];
 
     this.#renderTripPointsList();
   }
 
-  #renderTripPoint(point, offersById, destination, offersByType) {
-    const escKeyDownHandler = (evt) => {
-      if (evt.key === 'Escape') {
-        evt.preventDefault();
-        replaceEditToPoint();
-        document.removeEventListener('keydown', escKeyDownHandler);
-      }
-    };
-
-    const tripPointComponent = new TripPointView({
-      point,
-      offersById,
-      destination,
-      onEditClick: () => {
-        replacePointToEdit();
-        document.addEventListener('keydown', escKeyDownHandler);
-      }
-    });
-
-    const editPointComponent = new EditPointView({
-      point,
-      offersByType,
-      destination,
-      onEditClick: () => {
-        replaceEditToPoint();
-        document.removeEventListener('keydown', escKeyDownHandler);
-      }
-    });
-
-    function replacePointToEdit() {
-      replace(editPointComponent, tripPointComponent);
-    }
-
-    function replaceEditToPoint() {
-      replace(tripPointComponent, editPointComponent);
-    }
-
-    render(tripPointComponent, this.#tripPointListComponent.element);
+  #renderFilters() {
+    const filters = generateFilter(this.#tripPointsModel.tripPoints);
+    render(new ListFilterView({filters}), this.#tripContolsFiltersElement);
   }
 
   #renderTripPointsList() {
@@ -76,13 +48,33 @@ export default class TripEventsPresenter {
     render(new ListSortView({sortItems}), this.#tripEventsContainer);
     render(this.#tripPointListComponent, this.#tripEventsContainer);
 
-    for (let i = 0; i < this.#tripPointsList.length; i++) {
-      this.#renderTripPoint(
-        this.#tripPointsList[i],
-        [...this.#tripPointsModel.getOfferById(this.#tripPointsList[i].type, this.#tripPointsList[i].offers)],
-        this.#tripPointsModel.getDestinationById(this.#tripPointsList[i].destination),
-        this.#tripPointsModel.getOfferByType(this.#tripPointsList[i].type)
-      );
+    for (const point of this.#tripPointsList) {
+      const tripEventPresenter = new TripEventPresenter({
+        point,
+        offersById: [...this.#tripPointsModel.getOfferById(point.type, point.offers)],
+        destination: this.#tripPointsModel.getDestinationById(point.destination),
+        offersByType: this.#tripPointsModel.getOfferByType(point.type),
+        onClickFavoriteButton: this.#handlePointChange,
+        onOpenEditForm: this.#handleOpenEditPoin,
+      });
+
+      this.#pointPresentersList.set(point.id, tripEventPresenter);
+
+      tripEventPresenter.init(this.#tripPointListComponent.element);
     }
   }
+
+  #handlePointChange = (updatedPoint) => {
+    this.#tripPointsList.map((point, index, array) => point.id === updatedPoint.id ? array.splice(index, 1, updatedPoint) : point);
+
+    // this.#tripPointsList.map((point) => point.id === updatedPoint.id ? updatedPoint : point);
+
+    this.#pointPresentersList.get(updatedPoint.id).init(this.#tripPointListComponent.element);
+
+    // console.log(this.#tripPointListComponent);
+  };
+
+  #handleOpenEditPoin = () => {
+    this.#pointPresentersList.forEach((pointPresenter) => pointPresenter.reset());
+  };
 }
