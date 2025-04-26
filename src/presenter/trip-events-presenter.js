@@ -55,26 +55,20 @@ export default class TripEventsPresenter {
         destination: this.#tripPointsModel.getDestinationById(point.destination),
         offersByType: this.#tripPointsModel.getOfferByType(point.type),
         onClickFavoriteButton: this.#handlePointChange,
-        onOpenEditForm: this.#handleOpenEditPoin,
+        onOpenEditForm: this.#handleOpenEditPoint,
       });
 
-      this.#pointPresentersList.set(point.id, tripEventPresenter);
-
       tripEventPresenter.init(this.#tripPointListComponent.element);
+      this.#pointPresentersList.set(point.id, tripEventPresenter);
     }
   }
 
   #handlePointChange = (updatedPoint) => {
-    this.#tripPointsList.map((point, index, array) => point.id === updatedPoint.id ? array.splice(index, 1, updatedPoint) : point);
-
-    // this.#tripPointsList.map((point) => point.id === updatedPoint.id ? updatedPoint : point);
-
-    this.#pointPresentersList.get(updatedPoint.id).init(this.#tripPointListComponent.element);
-
-    // console.log(this.#tripPointListComponent);
+    this.#tripPointsList.map((point) => point.id === updatedPoint.id ? updatedPoint : point);
+    this.#pointPresentersList.get(updatedPoint.id).init(this.#tripPointListComponent.element, updatedPoint);
   };
 
-  #handleOpenEditPoin = () => {
+  #handleOpenEditPoint = () => {
     this.#pointPresentersList.forEach((pointPresenter) => pointPresenter.reset());
   };
 }

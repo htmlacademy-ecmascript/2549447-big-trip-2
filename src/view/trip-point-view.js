@@ -85,8 +85,6 @@ export default class TripPointView extends AbstractView {
 
   #onClickFavoriteButtonHandler = () => {
     this.#onClickFavoriteButton();
-    const eventFavoriteBtnElement = this.element.querySelector('.event__favorite-btn');
-    eventFavoriteBtnElement.classList.toggle('event__favorite-btn--active');
   };
 
   get template() {

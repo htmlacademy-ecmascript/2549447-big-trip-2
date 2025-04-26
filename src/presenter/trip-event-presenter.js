@@ -23,11 +23,15 @@ export default class TripEventPresenter {
     this.#onOpenEditForm = onOpenEditForm;
   }
 
-  init (tripPointListComponent) {
+  init (tripPointListComponent, point) {
     this.#tripPointListComponent = tripPointListComponent;
 
-    // const prevTripPointComponent = this.#tripPointComponent;
-    // const prevEditPointComponent = this.#editPointComponent;
+    if (point) {
+      this.#point = point;
+    }
+
+    const prevTripPointComponent = this.#tripPointComponent;
+    const prevEditPointComponent = this.#editPointComponent;
 
     this.#tripPointComponent = new TripPointView({
       point: this.#point,
@@ -46,9 +50,10 @@ export default class TripEventPresenter {
 
     render(this.#tripPointComponent, this.#tripPointListComponent);
 
-    // replace(this.#editPointComponent, prevEditPointComponent);
-    // remove(prevTripPointComponent);
-    // remove(prevEditPointComponent);
+    if (prevEditPointComponent && prevTripPointComponent) {
+      replace(this.#tripPointComponent, prevTripPointComponent);
+      remove(prevTripPointComponent);
+    }
   }
 
   #replacePointToEdit = () => {
