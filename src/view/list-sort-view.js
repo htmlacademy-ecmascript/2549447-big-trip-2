@@ -9,9 +9,9 @@ function createSortItemTempalate (sort, isChecked) {
       type="radio" name="trip-sort"
       value="sort-${ type }"
       ${isChecked ? 'checked' : ''}
-      ${count === 0 ? 'checked' : ''}
+      ${count === 0 || type === 'event' || type === 'offers' ? 'disabled' : ''}
       />
-      <label class="trip-sort__btn" for="sort-day">${ type }</label>
+      <label class="trip-sort__btn" for="sort-${ type }">${ type }</label>
     </div>`;
 }
 
