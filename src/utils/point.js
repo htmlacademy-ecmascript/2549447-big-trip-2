@@ -41,4 +41,17 @@ function msToTime(duration) {
   return `${ days }${ hours }${ minutes }`;
 }
 
-export { humanizePointTime, humanizePointDate, humanizeDateTime, humanizeDateYear,humanizeDateTimeEdit, msToTime };
+function sortPointsByDay(pointA, pointB) {
+  return new Date(pointA.dateFrom) - new Date(pointB.dateFrom);
+}
+
+function sortPointsByTime(pointA, pointB) {
+  return (new Date(pointA.dateTo) - new Date(pointA.dateFrom))
+   - (new Date(pointB.dateTo) - new Date(pointB.dateFrom));
+}
+
+function sortPointsByPrice(pointA, pointB) {
+  return pointA.basePrice - pointB.basePrice;
+}
+
+export { humanizePointTime, humanizePointDate, humanizeDateTime, humanizeDateYear,humanizeDateTimeEdit, msToTime, sortPointsByDay, sortPointsByTime, sortPointsByPrice };
