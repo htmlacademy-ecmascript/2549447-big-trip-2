@@ -48,12 +48,15 @@ export default class TripEventPresenter {
       onEditClick: this.#closeEdit,
     });
 
-    render(this.#tripPointComponent, this.#tripPointListComponent);
+    if (prevTripPointComponent === null || prevEditPointComponent === null) {
+      render(this.#tripPointComponent, this.#tripPointListComponent);
 
-    if (prevEditPointComponent && prevTripPointComponent) {
-      replace(this.#tripPointComponent, prevTripPointComponent);
-      remove(prevTripPointComponent);
+      return;
     }
+
+    replace(this.#tripPointComponent, prevTripPointComponent);
+    remove(prevTripPointComponent);
+    remove(prevEditPointComponent);
   }
 
   #replacePointToEdit = () => {

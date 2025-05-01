@@ -1,4 +1,4 @@
-const TRIP_POINT_CONUT = 10;
+const TRIP_POINT_CONUT = 5;
 
 const FilterType = {
   EVERYTHING: 'everything',
