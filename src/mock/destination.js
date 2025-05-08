@@ -1,12 +1,12 @@
 const mockDestinations = [
   {
-    'id': '68a1d117-8840-43b1-b17f-da26b7bdf852',
+    'destinationId': '68a1d117-8840-43b1-b17f-da26b7bdf852',
     'descriptionPlace': 'Tokio - a true asian pearl',
     'name': 'Tokio',
     'pictures': []
   },
   {
-    'id': '3fd41f58-8be1-420b-9460-145cf3c5eb5f',
+    'destinationId': '3fd41f58-8be1-420b-9460-145cf3c5eb5f',
     'descriptionPlace': 'Barcelona - a true asian pearl',
     'name': 'Barcelona',
     'pictures': [
@@ -17,13 +17,13 @@ const mockDestinations = [
     ]
   },
   {
-    'id': 'a195c37a-8a24-4efb-a89e-8f1142e74d37',
+    'destinationId': 'a195c37a-8a24-4efb-a89e-8f1142e74d37',
     'descriptionPlace': 'Rome - with an embankment of a mighty river as a centre of attraction',
     'name': 'Rome',
     'pictures': []
   },
   {
-    'id': 'aad455f6-3022-4a68-9ca5-b74342d3b05d',
+    'destinationId': 'aad455f6-3022-4a68-9ca5-b74342d3b05d',
     'descriptionPlace': 'Amsterdam - middle-eastern paradise',
     'name': 'Amsterdam',
     'pictures': [
@@ -42,7 +42,7 @@ const mockDestinations = [
     ]
   },
   {
-    'id': '37708f07-f190-47a5-8bd9-49c18e1d6aab',
+    'destinationId': '37708f07-f190-47a5-8bd9-49c18e1d6aab',
     'descriptionPlace': 'Den Haag - full of of cozy canteens where you can try the best coffee in the Middle East',
     'name': 'Den Haag',
     'pictures': [
@@ -61,7 +61,7 @@ const mockDestinations = [
     ]
   },
   {
-    'id': '521db956-3198-4441-a56f-878663fdf739',
+    'destinationId': '521db956-3198-4441-a56f-878663fdf739',
     'descriptionPlace': 'Saint Petersburg - in a middle of Europe',
     'name': 'Saint Petersburg',
     'pictures': [
@@ -72,7 +72,7 @@ const mockDestinations = [
     ]
   },
   {
-    'id': '4246f4f8-ccdb-4faf-bdcb-ae5f5c1f6724',
+    'destinationId': '4246f4f8-ccdb-4faf-bdcb-ae5f5c1f6724',
     'descriptionPlace': 'Sochi - middle-eastern paradise',
     'name': 'Sochi',
     'pictures': [
@@ -87,7 +87,7 @@ const mockDestinations = [
     ]
   },
   {
-    'id': '5e3dbf84-1e6e-4d57-8bfe-613b4da57a6a',
+    'destinationId': '5e3dbf84-1e6e-4d57-8bfe-613b4da57a6a',
     'descriptionPlace': 'Valencia - with crowded streets',
     'name': 'Valencia',
     'pictures': [
@@ -102,13 +102,13 @@ const mockDestinations = [
     ]
   },
   {
-    'id': 'aff1aa63-5a8d-4619-9614-12ef1a66cc9e',
+    'destinationId': 'aff1aa63-5a8d-4619-9614-12ef1a66cc9e',
     'descriptionPlace': 'Geneva - is a beautiful city',
     'name': 'Geneva',
     'pictures': []
   },
   {
-    'id': '0a9fd66f-b3e9-4466-8217-c8d001649364',
+    'destinationId': '0a9fd66f-b3e9-4466-8217-c8d001649364',
     'descriptionPlace': 'Berlin - for those who value comfort and coziness',
     'name': 'Berlin',
     'pictures': [

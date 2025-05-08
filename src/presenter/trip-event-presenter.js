@@ -13,14 +13,20 @@ export default class TripEventPresenter {
   #editPointComponent = null;
   #onOpenEditForm = null;
   #isOpenEdit = null;
+  #allTypesEvent = null;
+  #allNamesDestination = null;
+  #tripPointsModel = null;
 
-  constructor({point, offersById, destination, offersByType, onClickFavoriteButton, onOpenEditForm}) {
+  constructor({point, offersById, destination, offersByType, onClickFavoriteButton, onOpenEditForm, allTypesEvent, allNamesDestination, tripPointsModel}) {
     this.#point = point;
     this.#offersById = offersById;
     this.#destination = destination;
     this.#offersByType = offersByType;
     this.#onClickFavoriteButton = onClickFavoriteButton;
     this.#onOpenEditForm = onOpenEditForm;
+    this.#allTypesEvent = allTypesEvent;
+    this.#allNamesDestination = allNamesDestination;
+    this.#tripPointsModel = tripPointsModel;
   }
 
   init (tripPointListComponent, point) {
@@ -46,11 +52,14 @@ export default class TripEventPresenter {
       offersByType: this.#offersByType,
       destination: this.#destination,
       onEditClick: this.#closeEdit,
+      onFormSubmit: this.#saveEdit,
+      allTypesEvent: this.#allTypesEvent,
+      allNamesDestination: this.#allNamesDestination,
+      tripPointsModel: this.#tripPointsModel,
     });
 
     if (prevTripPointComponent === null || prevEditPointComponent === null) {
       render(this.#tripPointComponent, this.#tripPointListComponent);
-
       return;
     }
 
@@ -87,12 +96,20 @@ export default class TripEventPresenter {
   };
 
   #closeEdit = () => {
+    this.#editPointComponent.reset(this.#point);
     this.#replaceEditToPoint();
     document.removeEventListener('keydown', this.#escKeyDownHandler);
     this.#isOpenEdit = false;
   };
 
-  reset = () => {
+  #saveEdit = (parseStateToPoint) => {
+    this.#point = parseStateToPoint;
+    this.#replaceEditToPoint();
+    document.removeEventListener('keydown', this.#escKeyDownHandler);
+    this.#isOpenEdit = false;
+  };
+
+  resetView = () => {
     if (this.#isOpenEdit) {
       this.#closeEdit();
     }

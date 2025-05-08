@@ -6,18 +6,22 @@ import { mockDestinations } from '../mock/destination.js';
 export default class TripPointsModel {
   #tripPoints = Array.from({length: TRIP_POINT_CONUT}, getRandomTripPoint);
   #offers = mockOffers;
-  #destination = mockDestinations;
+  #destinations = mockDestinations;
 
   get tripPoints() {
     return this.#tripPoints;
   }
 
-  get offer() {
+  get offers() {
     return this.#offers;
   }
 
+  get allTypesEvent() {
+    return this.offers.map((offer) => offer.type);
+  }
+
   getOfferByType(type) {
-    const allOffers = this.offer;
+    const allOffers = this.offers;
     return allOffers.find((offer) => offer.type === type);
   }
 
@@ -26,12 +30,16 @@ export default class TripPointsModel {
     return offersType.offers.filter((item) => itemsId.find((id) => item.id === id));
   }
 
-  get destination() {
-    return this.#destination;
+  get destinations() {
+    return this.#destinations;
   }
 
   getDestinationById(id) {
-    const allDestination = this.destination;
-    return allDestination.find((item) => item.id === id);
+    const allDestinations = this.destinations;
+    return allDestinations.find((item) => item.destinationId === id);
+  }
+
+  get allNamesDestination() {
+    return this.destinations.map((destination) => destination.name);
   }
 }
