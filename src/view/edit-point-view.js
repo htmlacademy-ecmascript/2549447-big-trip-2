@@ -129,6 +129,7 @@ export default class EditPointView extends AbstractStatefulView {
       .addEventListener('change', this.#typeChangeHandler);
     this.element.querySelector('.event__input--destination')
       .addEventListener('change', this.#destinationChangeHandler);
+    this.#setDatepickers();
   }
 
   get template() {
@@ -158,13 +159,11 @@ export default class EditPointView extends AbstractStatefulView {
   #editClickHandler = (evt) => {
     evt.preventDefault();
     this.#handleEditClick();
-    this.#setDatepickers();
   };
 
   #formSubmitHandler = (evt) => {
     evt.preventDefault();
     this.#handleFormSubmit(EditPointView.parseStateToPoint(this._state));
-    this.#setDatepickers();
   };
 
   #typeChangeHandler = (evt) => {
@@ -175,7 +174,6 @@ export default class EditPointView extends AbstractStatefulView {
       type: evt.target.value,
       offersByType,
     });
-    this.#setDatepickers();
   };
 
   #destinationChangeHandler = (evt) => {
@@ -192,7 +190,6 @@ export default class EditPointView extends AbstractStatefulView {
     this.updateElement({
       destination: changeDestination,
     });
-    this.#setDatepickers();
   };
 
   #dateFromChangeHandler = ([userDate]) => {
