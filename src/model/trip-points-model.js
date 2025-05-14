@@ -1,9 +1,10 @@
+import Observable from '../framework/observable.js';
 import { TRIP_POINT_CONUT } from '../const.js';
 import { getRandomTripPoint } from '../mock/trip-point.js';
 import { mockOffers } from '../mock/offer.js';
 import { mockDestinations } from '../mock/destination.js';
 
-export default class TripPointsModel {
+export default class TripPointsModel extends Observable {
   #tripPoints = Array.from({length: TRIP_POINT_CONUT}, getRandomTripPoint);
   #offers = mockOffers;
   #destinations = mockDestinations;
@@ -41,5 +42,45 @@ export default class TripPointsModel {
 
   get allNamesDestination() {
     return this.destinations.map((destination) => destination.name);
+  }
+
+  updatePoint(updateType, update) {
+    const index = this.#tripPoints.findIndex((tripPoint) => tripPoint.pointId === update.pointId);
+
+    if (index === -1) {
+      throw new Error('Can\'t update unexisting point');
+    }
+
+    this.#tripPoints = [
+      ...this.#tripPoints.slice(0, index),
+      update,
+      ...this.#tripPoints.slice(index + 1),
+    ];
+
+    this._notify(updateType, update);
+  }
+
+  addPoint(updateType, update) {
+    this.#tripPoints = [
+      update,
+      ...this.#tripPoints,
+    ];
+
+    this._notify(updateType, update);
+  }
+
+  deletePoint(updateType, update) {
+    const index = this.#tripPoints.findIndex((tripPoint) => tripPoint.pointId === update.pointId);
+
+    if (index === -1) {
+      throw new Error('Can\'t delete unexisting point');
+    }
+
+    this.#tripPoints = [
+      ...this.#tripPoints.slice(0, index),
+      ...this.#tripPoints.slice(index + 1),
+    ];
+
+    this._notify(updateType, update);
   }
 }

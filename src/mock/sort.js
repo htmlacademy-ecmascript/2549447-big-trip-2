@@ -1,14 +1,9 @@
-import { sort } from '../utils/sort.js';
+import { SortingType } from '../const.js';
 
-function generateSortItem(tripPoints) {
-  return Object.entries(sort).map(
-    ([sortingType, sortingPoints]) => ({
-      type: sortingType,
-      count: sortingPoints(tripPoints).length,
-    }),
-  );
+function generateSortTypesList() {
+  return Object.values(SortingType);
 }
 
 export {
-  generateSortItem,
+  generateSortTypesList,
 };
