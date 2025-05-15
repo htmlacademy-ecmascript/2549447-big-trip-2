@@ -1,6 +1,6 @@
 const mockDestinations = [
   {
-    'destinationId': 'addNewPoint',
+    'destinationId': 'addNewPointDestinationId',
     'descriptionPlace': 'Saratov is the capital of the Volga region',
     'name': 'Saratov',
     'pictures': [

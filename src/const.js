@@ -37,7 +37,7 @@ const NewPoint = {
   'basePrice': '',
   'dateFrom': new Date(),
   'dateTo': new Date(),
-  'destination': 'addNewPoint',
+  'destination': 'addNewPointDestinationId',
   'isFavorite': false,
   'offers': [],
   'type': 'taxi'

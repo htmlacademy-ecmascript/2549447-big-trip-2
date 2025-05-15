@@ -75,8 +75,8 @@ function createEditPointTemplate(point, offersByType, destination, allTypesEvent
         <h3 class="event__section-title  event__section-title--offers">Offers</h3>
         <div class="event__available-offers">
           ${ offersByType.offers.map(({ title, price, id }) => `<div class="event__offer-selector">
-          <input class="event__offer-checkbox  visually-hidden" id="event-offer-luggage-${ id }" type="checkbox" name="event-offer-luggage" ${ isCheckedOffer(offers, id) }>
-            <label class="event__offer-label" for="event-offer-luggage-${ id }">
+          <input class="event__offer-checkbox  visually-hidden" id="${ id }" type="checkbox" name="event-offer-luggage" ${ isCheckedOffer(offers, id) }>
+            <label class="event__offer-label" for="${ id }">
               <span class="event__offer-title">${ title }</span>
               &plus;&euro;&nbsp;
               <span class="event__offer-price">${ price }</span>
@@ -138,6 +138,10 @@ export default class EditPointView extends AbstractStatefulView {
       .addEventListener('change', this.#typeChangeHandler);
     this.element.querySelector('.event__input--destination')
       .addEventListener('change', this.#destinationChangeHandler);
+    this.element.querySelector('.event__input--price')
+      .addEventListener('change', this.#priceChangeHandler);
+    this.element.querySelectorAll('.event__offer-checkbox')
+      .forEach((checkbox) => checkbox.addEventListener('change', this.#offerChangeHandler));
     this.element.querySelector('.event__reset-btn')
       .addEventListener('click', this.#formDeleteClickHandler);
     this.#setDatepickers();
@@ -182,6 +186,7 @@ export default class EditPointView extends AbstractStatefulView {
     const offersByType = this.#tripPointsModel.getOfferByType(evt.target.value);
     this.#offersByType = offersByType;
     this.updateElement({
+      ...this._state,
       type: evt.target.value,
       offersByType,
     });
@@ -191,6 +196,12 @@ export default class EditPointView extends AbstractStatefulView {
     evt.preventDefault();
     const targetDestination = this.#tripPointsModel.destinations
       .find((destinationCheck) => destinationCheck.name === evt.target.value);
+
+    if (!targetDestination) {
+      evt.target.value = '';
+      return;
+    }
+
     const targetDestinationId = targetDestination ? targetDestination.destinationId : null;
     const emptyDestination = {
       descriptionPlace: undefined,
@@ -199,7 +210,31 @@ export default class EditPointView extends AbstractStatefulView {
     const changeDestination = targetDestinationId ? this.#tripPointsModel.getDestinationById(targetDestinationId) : emptyDestination;
     this.#destination = changeDestination;
     this.updateElement({
-      destination: changeDestination,
+      ...this._state,
+      destination: changeDestination.destinationId,
+    });
+  };
+
+  #priceChangeHandler = (evt) => {
+    evt.preventDefault();
+    this._setState({ ...this._state.point, basePrice: evt.target.value});
+  };
+
+  #offerChangeHandler = (evt) => {
+    evt.preventDefault();
+    const checkOfferId = evt.target.id;
+
+    let updatedOffers;
+
+    if (evt.target.checked) {
+      updatedOffers = [...this._state.offers, checkOfferId];
+    } else {
+      updatedOffers = this._state.offers.filter((id) => id !== checkOfferId);
+    }
+
+    this._setState({
+      ...this._state,
+      offers: updatedOffers
     });
   };
 
