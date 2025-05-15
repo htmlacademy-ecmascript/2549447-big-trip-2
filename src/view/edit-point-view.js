@@ -217,11 +217,19 @@ export default class EditPointView extends AbstractStatefulView {
 
   #priceChangeHandler = (evt) => {
     evt.preventDefault();
-    this._setState({ ...this._state.point, basePrice: evt.target.value});
+
+    const inputPrice = parseInt(evt.target.value, 10);
+
+    if (Number.isNaN(inputPrice) || inputPrice < 0) {
+      return;
+    }
+
+    this._setState({ ...this._state.point, basePrice: inputPrice});
   };
 
   #offerChangeHandler = (evt) => {
     evt.preventDefault();
+
     const checkOfferId = evt.target.id;
 
     let updatedOffers;
