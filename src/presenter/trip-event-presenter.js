@@ -114,14 +114,14 @@ export default class TripEventPresenter {
   };
 
   #saveEdit = (update) => {
-    // const isMinorUpdate =
-    //   this.#point.dateFrom !== update.dateFrom ||
-    //   this.#point.dateTo !== update.dateTo ||
-    //   this.#point.basePrice !== update.basePrice;
+    const isMinorUpdate =
+      this.#point.dateFrom === update.dateFrom &&
+      this.#point.dateTo === update.dateTo &&
+      this.#point.basePrice === update.basePrice;
 
     this.#handlePointDataChange(
       UserAction.UPDATE_POINT,
-      UpdateType.MINOR,
+      isMinorUpdate ? UpdateType.MINOR : UpdateType.MAJOR,
       update,
     );
     this.#replaceEditToPoint();
