@@ -40,7 +40,7 @@ function createEditPointTemplate(point, offersByType, destination, allTypesEvent
         <label class="event__label  event__type-output" for="event-destination-${ pointId }">
           ${ type }
         </label>
-        <input class="event__input  event__input--destination" id="event-destination-${ pointId }" type="text" name="event-destination" value="${ he.encode(name) }" list="destination-list-${ pointId }">
+        <input class="event__input  event__input--destination" id="event-destination-${ pointId }" type="text" name="event-destination" value="${ he.encode(name) }" list="destination-list-${ pointId }" required>
         ${ allNamesDestination.length > 0 ? `<datalist id="destination-list-${ pointId }">
           ${ allNamesDestination.map((destinationName) => `<option value="${ destinationName }"></option>`).join('')}
         </datalist>` : '' }
@@ -59,7 +59,7 @@ function createEditPointTemplate(point, offersByType, destination, allTypesEvent
           <span class="visually-hidden">Price</span>
           &euro;
         </label>
-        <input class="event__input  event__input--price" id="event-price-${ pointId }" type="number" name="event-price" value="${ basePrice }">
+        <input class="event__input  event__input--price" id="event-price-${ pointId }" type="number" name="event-price" value="${ basePrice }" required>
       </div>
 
       <button class="event__save-btn  btn  btn--blue" type="submit">Save</button>
