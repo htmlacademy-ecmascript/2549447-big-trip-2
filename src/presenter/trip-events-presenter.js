@@ -117,7 +117,6 @@ export default class TripEventsPresenter {
   };
 
   #handleViewAction = (actionType, updateType, update) => {
-    console.log(actionType, updateType, update);
     switch (actionType) {
       case UserAction.UPDATE_POINT:
         this.#tripPointsModel.updatePoint(updateType, update);
