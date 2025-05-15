@@ -1,5 +1,3 @@
-import { nanoid } from 'nanoid';
-
 const TRIP_POINT_CONUT = 3;
 
 const FilterType = {
@@ -36,7 +34,6 @@ const UpdateType = {
 };
 
 const NewPoint = {
-  'pointId': nanoid(),
   'basePrice': '',
   'dateFrom': new Date(),
   'dateTo': new Date(),
