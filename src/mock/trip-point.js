@@ -4,8 +4,8 @@ const mockTripPoints = [
   {
     'pointId': 'bf3e3a8d-bac2-4d15-8935-ede26303deb5',
     'basePrice': 4481,
-    'dateFrom': '2025-03-22T07:18:15.030Z',
-    'dateTo': '2025-03-23T17:03:15.030Z',
+    'dateFrom': '2025-06-22T07:18:15.030Z',
+    'dateTo': '2025-06-23T17:03:15.030Z',
     'destination': 'a195c37a-8a24-4efb-a89e-8f1142e74d37',
     'isFavorite': false,
     'offers': [
@@ -18,8 +18,8 @@ const mockTripPoints = [
   {
     'pointId': 'd358b84c-e337-4acd-8867-bd2ad8ab852d',
     'basePrice': 6364,
-    'dateFrom': '2025-03-25T00:16:15.030Z',
-    'dateTo': '2025-03-25T13:49:15.030Z',
+    'dateFrom': '2025-04-25T00:16:15.030Z',
+    'dateTo': '2025-06-25T13:49:15.030Z',
     'destination': '68a1d117-8840-43b1-b17f-da26b7bdf852',
     'isFavorite': false,
     'offers': [
@@ -41,8 +41,8 @@ const mockTripPoints = [
   {
     'pointId': 'b3b27c1f-ab3f-4cf5-b7bf-5eadcb82510b',
     'basePrice': 7122,
-    'dateFrom': '2025-03-29T11:41:15.030Z',
-    'dateTo': '2025-03-29T21:03:15.030Z',
+    'dateFrom': '2025-06-29T11:41:15.030Z',
+    'dateTo': '2025-06-29T21:03:15.030Z',
     'destination': 'aff1aa63-5a8d-4619-9614-12ef1a66cc9e',
     'isFavorite': true,
     'offers': [
@@ -66,7 +66,7 @@ const mockTripPoints = [
     'pointId': 'bae24ed2-4a83-4e97-aa01-933856038571',
     'basePrice': 7175,
     'dateFrom': '2025-04-03T01:01:15.030Z',
-    'dateTo': '2025-04-04T09:39:15.030Z',
+    'dateTo': '2025-06-04T09:39:15.030Z',
     'destination': '68a1d117-8840-43b1-b17f-da26b7bdf852',
     'isFavorite': true,
     'offers': [
@@ -93,7 +93,7 @@ const mockTripPoints = [
     'pointId': 'dedc28fa-528d-44ff-97a1-0a876d3a55a6',
     'basePrice': 7282,
     'dateFrom': '2025-04-08T12:47:15.030Z',
-    'dateTo': '2025-04-08T23:53:15.030Z',
+    'dateTo': '2025-06-08T23:53:15.030Z',
     'destination': 'a195c37a-8a24-4efb-a89e-8f1142e74d37',
     'isFavorite': false,
     'offers': [
@@ -145,8 +145,8 @@ const mockTripPoints = [
   {
     'pointId': 'd2eadb0a-2515-4068-a0b0-2d6bcd8fa58a',
     'basePrice': 7709,
-    'dateFrom': '2025-04-18T05:18:15.030Z',
-    'dateTo': '2025-04-19T04:53:15.030Z',
+    'dateFrom': '2025-06-18T05:18:15.030Z',
+    'dateTo': '2025-06-19T04:53:15.030Z',
     'destination': 'a195c37a-8a24-4efb-a89e-8f1142e74d37',
     'isFavorite': false,
     'offers': [],
@@ -189,8 +189,8 @@ const mockTripPoints = [
   {
     'pointId': 'ac657213-4969-40f5-84a4-aed77f37bb66',
     'basePrice': 5946,
-    'dateFrom': '2025-04-26T14:48:15.030Z',
-    'dateTo': '2025-04-26T23:01:15.030Z',
+    'dateFrom': '2025-06-26T14:48:15.030Z',
+    'dateTo': '2025-06-26T23:01:15.030Z',
     'destination': '521db956-3198-4441-a56f-878663fdf739',
     'isFavorite': true,
     'offers': [
@@ -216,8 +216,8 @@ const mockTripPoints = [
   {
     'pointId': '60e30a99-619c-4790-b6dc-8f3a2f86f791',
     'basePrice': 363,
-    'dateFrom': '2025-04-30T20:02:15.030Z',
-    'dateTo': '2025-05-01T02:19:15.030Z',
+    'dateFrom': '2025-05-30T20:02:15.030Z',
+    'dateTo': '2025-06-01T02:19:15.030Z',
     'destination': '37708f07-f190-47a5-8bd9-49c18e1d6aab',
     'isFavorite': false,
     'offers': [],
@@ -227,7 +227,7 @@ const mockTripPoints = [
     'pointId': '7ed15aaf-cdd0-4de9-96c7-558a4b470cce',
     'basePrice': 7389,
     'dateFrom': '2025-05-01T18:51:15.030Z',
-    'dateTo': '2025-05-03T06:27:15.030Z',
+    'dateTo': '2025-05-29T06:27:15.030Z',
     'destination': 'a195c37a-8a24-4efb-a89e-8f1142e74d37',
     'isFavorite': false,
     'offers': [
@@ -304,8 +304,8 @@ const mockTripPoints = [
   {
     'pointId': '087b69c2-a75f-4d07-b5ab-f58a69406078',
     'basePrice': 7322,
-    'dateFrom': '2025-05-14T10:50:15.030Z',
-    'dateTo': '2025-05-14T22:25:15.030Z',
+    'dateFrom': '2025-05-10T10:50:15.030Z',
+    'dateTo': '2025-05-20T22:25:15.030Z',
     'destination': '3fd41f58-8be1-420b-9460-145cf3c5eb5f',
     'isFavorite': false,
     'offers': [

@@ -1,4 +1,4 @@
-const TRIP_POINT_CONUT = 5;
+const TRIP_POINT_CONUT = 3;
 
 const FilterType = {
   EVERYTHING: 'everything',
@@ -15,8 +15,40 @@ const SortingType = {
   OFFERS: 'offers',
 };
 
+const Mode = {
+  DEFAULT: 'default',
+  EDITING: 'editing',
+  ADDING: 'adding',
+};
+
+const UserAction = {
+  UPDATE_POINT: 'updatePoint',
+  ADD_POINT: 'addPoint',
+  DELETE_POINT: 'deletePoint',
+};
+
+const UpdateType = {
+  PATCH: 'patch',
+  MINOR: 'minor',
+  MAJOR: 'major',
+};
+
+const NewPoint = {
+  'basePrice': '',
+  'dateFrom': new Date(),
+  'dateTo': new Date(),
+  'destination': 'addNewPointDestinationId',
+  'isFavorite': false,
+  'offers': [],
+  'type': 'taxi'
+};
+
 export {
   TRIP_POINT_CONUT,
   FilterType,
   SortingType,
+  Mode,
+  UserAction,
+  UpdateType,
+  NewPoint,
 };
