@@ -4,7 +4,7 @@ import EmptyPointsListView from '../view/empty-points-list-view.js';
 import TripEventPresenter from './trip-event-presenter.js';
 import NewTripEventPresenter from './new-trip-event-presenter.js';
 import { remove, render, RenderPosition } from '../framework/render.js';
-import { generateSortTypesList } from '../mock/sort.js';
+import { generateSortTypesList } from '../utils/sort.js';
 import { sortPointsByDay, sortPointsByTime, sortPointsByPrice } from '../utils/point.js';
 import { filter } from '../utils/filter.js';
 import { FilterType, NewPoint, SortingType, UpdateType, UserAction } from '../const.js';
@@ -24,17 +24,15 @@ export default class TripEventsPresenter {
   #currentSortType = SortingType.DAY;
   #filterType = FilterType.EVERYTHING;
 
-  constructor({ tripEventsContainer, tripPointsModel, filterModel, onNewPointDestroy }) {
+  constructor({ tripEventsContainer, tripPointsModel, filterModel, onNewPointDestroy}) {
     this.#tripEventsContainer = tripEventsContainer;
     this.#tripPointsModel = tripPointsModel;
     this.#filterModel = filterModel;
 
     this.#newTripEventPresenter = new NewTripEventPresenter({
-      point: NewPoint,
       onDataChange: this.#handleViewAction,
       onDestroy: onNewPointDestroy,
       offersByType: this.#tripPointsModel.getOfferByType(NewPoint.type),
-      destination: this.#tripPointsModel.getDestinationById(NewPoint.destination),
       allTypesEvent: this.#tripPointsModel.allTypesEvent,
       allNamesDestination: this.#tripPointsModel.allNamesDestination,
       tripPointsModel: this.#tripPointsModel,
@@ -66,6 +64,17 @@ export default class TripEventsPresenter {
     this.#currentSortType = SortingType.DAY;
     this.#filterModel.setFilter(UpdateType.MAJOR, FilterType.EVERYTHING);
     this.#newTripEventPresenter.init();
+  }
+
+  #isCountFiltersEmpty() {
+    const points = this.#tripPointsModel.tripPoints;
+    const countFilters = [
+      filter[FilterType.EVERYTHING](points).length,
+      filter[FilterType.FUTURE](points).length,
+      filter[FilterType.PRESENT](points).length,
+      filter[FilterType.PAST](points).length,
+    ];
+    return countFilters.every((count) => count === 0);
   }
 
   #renderSort() {
@@ -105,7 +114,7 @@ export default class TripEventsPresenter {
 
   #renderEmptyPointsList() {
     this.#emptyPointsListComponent = new EmptyPointsListView({
-      filterType: this.#filterType,
+      filterType: this.#isCountFiltersEmpty() ? FilterType.EVERYTHING : this.#filterType,
     });
 
     render(this.#emptyPointsListComponent, this.#tripEventsContainer);

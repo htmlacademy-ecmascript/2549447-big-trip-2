@@ -1,4 +1,4 @@
-import { SortingType } from '../const.js';
+import { SortingType } from '../const';
 
 function generateSortTypesList() {
   return Object.values(SortingType);

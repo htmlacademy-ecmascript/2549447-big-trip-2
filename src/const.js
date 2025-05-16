@@ -37,10 +37,14 @@ const NewPoint = {
   'basePrice': '',
   'dateFrom': new Date(),
   'dateTo': new Date(),
-  'destination': 'addNewPointDestinationId',
   'isFavorite': false,
   'offers': [],
-  'type': 'taxi'
+  'type': 'flight',
+};
+
+const DestinationOfNewPoint = {
+  'name': '',
+  'pictures': [],
 };
 
 export {
@@ -51,4 +55,5 @@ export {
   UserAction,
   UpdateType,
   NewPoint,
+  DestinationOfNewPoint,
 };

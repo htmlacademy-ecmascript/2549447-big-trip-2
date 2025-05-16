@@ -1,16 +1,5 @@
 const mockDestinations = [
   {
-    'destinationId': 'addNewPointDestinationId',
-    'descriptionPlace': 'Saratov is the capital of the Volga region',
-    'name': 'Saratov',
-    'pictures': [
-      {
-        'src': 'https://cdn.culture.ru/images/22a0029a-736a-547f-9d00-9c044ab9691d',
-        'description': 'Volga'
-      }
-    ]
-  },
-  {
     'destinationId': '68a1d117-8840-43b1-b17f-da26b7bdf852',
     'descriptionPlace': 'Tokio - a true asian pearl',
     'name': 'Tokio',
