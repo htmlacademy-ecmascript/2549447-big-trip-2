@@ -9,28 +9,29 @@ export default class NewTripEventPresenter {
   #tripEventsListElement = null;
   #tripEventsElement = null;
   #emptyPointsListElements = null;
-  #eventsListElements = null;
   #handleDataChange = null;
   #handleDestroy = null;
   #offersByType = null;
   #allTypesEvent = null;
   #allNamesDestination = null;
-  #tripPointsModel = null;
+  #pointsModel = null;
+
   #tripPointListComponent = new TripPointListView();
   #emptyPointsListComponent = new EmptyPointsListView({ filterType: FilterType.EVERYTHING });
   #newPointComponent = null;
   #mode = Mode.ADDING;
 
-  constructor({ onDataChange, onDestroy, offersByType, allTypesEvent, allNamesDestination, tripPointsModel }) {
+  constructor({ onDataChange, onDestroy, offersByType, allTypesEvent, allNamesDestination }) {
     this.#handleDataChange = onDataChange;
     this.#handleDestroy = onDestroy;
     this.#offersByType = offersByType;
     this.#allTypesEvent = allTypesEvent;
     this.#allNamesDestination = allNamesDestination;
-    this.#tripPointsModel = tripPointsModel;
   }
 
   init() {
+    console.log(this.#offersByType);
+
     if (this.#newPointComponent !== null) {
       return;
     }
@@ -43,7 +44,7 @@ export default class NewTripEventPresenter {
       destination: DestinationOfNewPoint,
       allTypesEvent: this.#allTypesEvent,
       allNamesDestination: this.#allNamesDestination,
-      tripPointsModel: this.#tripPointsModel,
+      pointsModel: this.#pointsModel,
       mode: this.#mode,
     });
 

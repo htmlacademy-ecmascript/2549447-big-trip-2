@@ -31,6 +31,26 @@ const UpdateType = {
   PATCH: 'patch',
   MINOR: 'minor',
   MAJOR: 'major',
+  INIT: 'init',
+  ERROR: 'error'
+};
+
+const Method = {
+  GET: 'GET',
+  PUT: 'PUT',
+  POST: 'POST',
+  DELETE: 'DELETE',
+};
+
+const EndPoint = {
+  POINTS: 'points',
+  DESTINATIONS: 'destinations',
+  OFFERS: 'offers',
+};
+
+const ApiService = {
+  AUTHORIZATION: 'Basic hsh3khjh3hkjh3kh',
+  END_POINT: 'https://22.objects.htmlacademy.pro/big-trip',
 };
 
 const NewPoint = {
@@ -56,4 +76,7 @@ export {
   UpdateType,
   NewPoint,
   DestinationOfNewPoint,
+  Method,
+  EndPoint,
+  ApiService,
 };
