@@ -2,7 +2,7 @@ import TripPointListView from '../view/trip-point-list-view.js';
 import EmptyPointsListView from '../view/empty-points-list-view.js';
 import { remove, render, RenderPosition } from '../framework/render.js';
 import EditPointView from '../view/edit-point-view.js';
-import { nanoid } from 'nanoid';
+
 import { UserAction, UpdateType, Mode, FilterType, NewPoint, DestinationOfNewPoint } from '../const.js';
 
 export default class NewTripEventPresenter {
@@ -104,8 +104,7 @@ export default class NewTripEventPresenter {
     this.#handleDataChange(
       UserAction.ADD_POINT,
       UpdateType.MINOR,
-
-      { pointId: nanoid(), ...point },
+      point,
     );
   };
 

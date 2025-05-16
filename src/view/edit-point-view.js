@@ -188,7 +188,7 @@ export default class EditPointView extends AbstractStatefulView {
     this.updateElement({
       ...this._state,
       type: evt.target.value,
-      offersByType,
+      offers: offersByType.offers,
     });
   };
 
