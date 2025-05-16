@@ -85,7 +85,7 @@ function createEditPointTemplate(point, offersByType, destination, allTypesEvent
         </div>
       </section>` : '' }
 
-      ${ description !== undefined ? `<section class="event__section  event__section--destination">
+      ${ description ? `<section class="event__section  event__section--destination">
         <h3 class="event__section-title  event__section-title--destination">Destination</h3>
         <p class="event__destination-description">${ description }</p>
         ${ pictures.length > 0 ? `<div class="event__photos-container">

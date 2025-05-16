@@ -1,5 +1,3 @@
-const TRIP_POINT_CONUT = 3;
-
 const FilterType = {
   EVERYTHING: 'everything',
   FUTURE: 'future',
@@ -49,7 +47,7 @@ const EndPoint = {
 };
 
 const ApiService = {
-  AUTHORIZATION: 'Basic hsh3khjh3hkjh3kh',
+  AUTHORIZATION: 'Basic hs54gfgjgjjh3kh',
   END_POINT: 'https://22.objects.htmlacademy.pro/big-trip',
 };
 
@@ -68,7 +66,6 @@ const DestinationOfNewPoint = {
 };
 
 export {
-  TRIP_POINT_CONUT,
   FilterType,
   SortingType,
   Mode,

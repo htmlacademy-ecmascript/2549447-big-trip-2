@@ -1,8 +1,7 @@
 import TripPointListView from '../view/trip-point-list-view.js';
 import EmptyPointsListView from '../view/empty-points-list-view.js';
-import { remove, render, RenderPosition } from '../framework/render.js';
 import EditPointView from '../view/edit-point-view.js';
-
+import { remove, render, RenderPosition } from '../framework/render.js';
 import { UserAction, UpdateType, Mode, FilterType, NewPoint, DestinationOfNewPoint } from '../const.js';
 
 export default class NewTripEventPresenter {
@@ -11,27 +10,18 @@ export default class NewTripEventPresenter {
   #emptyPointsListElements = null;
   #handleDataChange = null;
   #handleDestroy = null;
-  #offersByType = null;
-  #allTypesEvent = null;
-  #allNamesDestination = null;
-  #pointsModel = null;
 
   #tripPointListComponent = new TripPointListView();
   #emptyPointsListComponent = new EmptyPointsListView({ filterType: FilterType.EVERYTHING });
   #newPointComponent = null;
   #mode = Mode.ADDING;
 
-  constructor({ onDataChange, onDestroy, offersByType, allTypesEvent, allNamesDestination }) {
+  constructor({ onDataChange, onDestroy }) {
     this.#handleDataChange = onDataChange;
     this.#handleDestroy = onDestroy;
-    this.#offersByType = offersByType;
-    this.#allTypesEvent = allTypesEvent;
-    this.#allNamesDestination = allNamesDestination;
   }
 
-  init() {
-    console.log(this.#offersByType);
-
+  init(pointsModel) {
     if (this.#newPointComponent !== null) {
       return;
     }
@@ -40,11 +30,11 @@ export default class NewTripEventPresenter {
       point: NewPoint,
       onFormSubmit: this.#handleFormSubmit,
       onDeleteClick: this.#handleDeleteClick,
-      offersByType: this.#offersByType,
+      offersByType: pointsModel.getOffersByType(NewPoint.type),
       destination: DestinationOfNewPoint,
-      allTypesEvent: this.#allTypesEvent,
-      allNamesDestination: this.#allNamesDestination,
-      pointsModel: this.#pointsModel,
+      allTypesEvent: pointsModel.allTypesEvent,
+      allNamesDestination: pointsModel.allNamesDestination,
+      pointsModel: pointsModel,
       mode: this.#mode,
     });
 

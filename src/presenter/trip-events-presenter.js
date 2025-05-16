@@ -8,7 +8,7 @@ import { remove, render, RenderPosition } from '../framework/render.js';
 import { generateSortTypesList } from '../utils/sort.js';
 import { sortPointsByDay, sortPointsByTime, sortPointsByPrice } from '../utils/point.js';
 import { filter } from '../utils/filter.js';
-import { FilterType, SortingType, UpdateType, UserAction, NewPoint } from '../const.js';
+import { FilterType, SortingType, UpdateType, UserAction } from '../const.js';
 
 export default class TripEventsPresenter {
   #tripEventsContainer = null;
@@ -27,7 +27,7 @@ export default class TripEventsPresenter {
   #filterType = FilterType.EVERYTHING;
   #isLoading = true;
 
-  constructor({ tripEventsContainer, pointsModel, filterModel, onNewPointDestroy}) {
+  constructor({ tripEventsContainer, pointsModel, filterModel, onNewPointDestroy }) {
     this.#tripEventsContainer = tripEventsContainer;
     this.#pointsModel = pointsModel;
     this.#filterModel = filterModel;
@@ -35,10 +35,6 @@ export default class TripEventsPresenter {
     this.#newTripEventPresenter = new NewTripEventPresenter({
       onDataChange: this.#handleViewAction,
       onDestroy: onNewPointDestroy,
-      offersByType: this.#pointsModel.getOffersByType(NewPoint.type),
-      allTypesEvent: this.#pointsModel.allTypesEvent,
-      allNamesDestination: this.#pointsModel.allNamesDestination,
-      pointsModel: this.#pointsModel,
     });
 
     this.#pointsModel.addObserver(this.#handleModelEvent);
@@ -64,11 +60,9 @@ export default class TripEventsPresenter {
   }
 
   createNewPoint() {
-    console.log(this.#pointsModel.getOffersByType(NewPoint.type));
-
     this.#currentSortType = SortingType.DAY;
     this.#filterModel.setFilter(UpdateType.MAJOR, FilterType.EVERYTHING);
-    this.#newTripEventPresenter.init();
+    this.#newTripEventPresenter.init(this.#pointsModel);
   }
 
   #isCountFiltersEmpty() {
