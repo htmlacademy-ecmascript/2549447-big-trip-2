@@ -1,10 +1,10 @@
 import { FilterType } from '../const.js';
 
 const filter = {
-  [FilterType.EVERYTHING]: (tripPoints) => tripPoints.filter((point) => point !== undefined),
-  [FilterType.FUTURE]: (tripPoints) => tripPoints.filter((point) => new Date() < new Date(point.dateFrom)),
-  [FilterType.PRESENT]: (tripPoints) => tripPoints.filter((point) => new Date() > new Date(point.dateFrom) && new Date() < new Date(point.dateTo)),
-  [FilterType.PAST]: (tripPoints) => tripPoints.filter((point) => new Date() > new Date(point.dateTo)),
+  [FilterType.EVERYTHING]: (points) => points.filter((point) => point !== undefined),
+  [FilterType.FUTURE]: (points) => points.filter((point) => new Date() < new Date(point.dateFrom)),
+  [FilterType.PRESENT]: (points) => points.filter((point) => new Date() > new Date(point.dateFrom) && new Date() < new Date(point.dateTo)),
+  [FilterType.PAST]: (points) => points.filter((point) => new Date() > new Date(point.dateTo)),
 };
 
 export {

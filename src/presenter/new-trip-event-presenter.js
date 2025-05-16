@@ -2,52 +2,49 @@ import TripPointListView from '../view/trip-point-list-view.js';
 import EmptyPointsListView from '../view/empty-points-list-view.js';
 import { remove, render, RenderPosition } from '../framework/render.js';
 import EditPointView from '../view/edit-point-view.js';
-import { nanoid } from 'nanoid';
-import { UserAction, UpdateType, Mode } from '../const.js';
-import { FilterType } from '../const.js';
+
+import { UserAction, UpdateType, Mode, FilterType, NewPoint, DestinationOfNewPoint } from '../const.js';
 
 export default class NewTripEventPresenter {
-  #point = null;
   #tripEventsListElement = null;
   #tripEventsElement = null;
   #emptyPointsListElements = null;
   #handleDataChange = null;
   #handleDestroy = null;
   #offersByType = null;
-  #destination = null;
   #allTypesEvent = null;
   #allNamesDestination = null;
-  #tripPointsModel = null;
+  #pointsModel = null;
+
   #tripPointListComponent = new TripPointListView();
   #emptyPointsListComponent = new EmptyPointsListView({ filterType: FilterType.EVERYTHING });
   #newPointComponent = null;
   #mode = Mode.ADDING;
 
-  constructor({ point, onDataChange, onDestroy, offersByType, destination, allTypesEvent, allNamesDestination, tripPointsModel }) {
-    this.#point = point;
+  constructor({ onDataChange, onDestroy, offersByType, allTypesEvent, allNamesDestination }) {
     this.#handleDataChange = onDataChange;
     this.#handleDestroy = onDestroy;
     this.#offersByType = offersByType;
-    this.#destination = destination;
     this.#allTypesEvent = allTypesEvent;
     this.#allNamesDestination = allNamesDestination;
-    this.#tripPointsModel = tripPointsModel;
   }
 
   init() {
+    console.log(this.#offersByType);
+
     if (this.#newPointComponent !== null) {
       return;
     }
 
     this.#newPointComponent = new EditPointView({
-      point: this.#point,
+      point: NewPoint,
       onFormSubmit: this.#handleFormSubmit,
       onDeleteClick: this.#handleDeleteClick,
       offersByType: this.#offersByType,
-      destination: this.#destination,
+      destination: DestinationOfNewPoint,
       allTypesEvent: this.#allTypesEvent,
       allNamesDestination: this.#allNamesDestination,
-      tripPointsModel: this.#tripPointsModel,
+      pointsModel: this.#pointsModel,
       mode: this.#mode,
     });
 
@@ -85,15 +82,13 @@ export default class NewTripEventPresenter {
 
     document.removeEventListener('keydown', this.#escKeyDownHandler);
 
-    if(this.#tripEventsListElement && this.#tripEventsListElement.querySelectorAll('.trip-events__item').length === 0) {
-      this.deleteEmptyElement();
+    if(this.#tripEventsListElement && document.querySelectorAll('.trip-events__item').length === 0) {
       this.#tripEventsListElement.remove();
       render(this.#emptyPointsListComponent, this.#tripEventsElement);
       return;
     }
 
     if(!this.#tripEventsListElement) {
-      this.deleteEmptyElement();
       render(this.#emptyPointsListComponent, this.#tripEventsElement);
     }
   }
@@ -109,9 +104,7 @@ export default class NewTripEventPresenter {
     this.#handleDataChange(
       UserAction.ADD_POINT,
       UpdateType.MINOR,
-      // Пока у нас нет сервера, который бы после сохранения
-      // выдывал честный id задачи, нам нужно позаботиться об этом самим
-      { pointId: nanoid(), ...point },
+      point,
     );
   };
 
