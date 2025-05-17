@@ -45,20 +45,20 @@ export default class NewTripEventPresenter {
     document.addEventListener('keydown', this.#escKeyDownHandler);
 
     if (this.#emptyPointsListElements.length !== 0) {
-      this.deleteEmptyElement();
+      this.#deleteEmptyElement();
       render(this.#tripPointListComponent, this.#tripEventsElement);
       render(this.#newPointComponent, this.#tripPointListComponent.element, RenderPosition.AFTERBEGIN);
       return;
     }
 
     if (this.#tripEventsListElement) {
-      this.deleteEmptyElement();
+      this.#deleteEmptyElement();
       render(this.#newPointComponent, this.#tripEventsListElement, RenderPosition.AFTERBEGIN);
     }
   }
 
   destroy() {
-    this.deleteEmptyElement();
+    this.#deleteEmptyElement();
 
     if (this.#newPointComponent === null) {
       return;
@@ -83,13 +83,34 @@ export default class NewTripEventPresenter {
     }
   }
 
-  deleteEmptyElement() {
+  setSaving() {
+    if (this.#mode === Mode.ADDING) {
+      this.#newPointComponent.updateElement({
+        isSaving: true,
+        isDisabled: true,
+      });
+    }
+  }
+
+  setAborting() {
+    const resetFormState = () => {
+      this.#newPointComponent.updateElement({
+        isDisabled: false,
+        isSaving: false,
+        isDeleting: false,
+      });
+    };
+
+    this.#newPointComponent.shake(resetFormState);
+  }
+
+  #deleteEmptyElement() {
     this.#emptyPointsListElements = document.querySelectorAll('.trip-events__msg');
     this.#emptyPointsListElements.forEach((el) => el.remove());
   }
 
   #handleFormSubmit = (point) => {
-    this.destroy();
+    this.#deleteEmptyElement();
 
     this.#handleDataChange(
       UserAction.ADD_POINT,

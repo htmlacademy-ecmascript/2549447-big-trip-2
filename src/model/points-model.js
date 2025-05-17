@@ -38,31 +38,29 @@ export default class PointsModel extends Observable {
     return this.#offers;
   }
 
+  get destinations() {
+    return this.#destinations;
+  }
+
+  get allNamesDestination() {
+    return this.destinations.map((destination) => destination.name);
+  }
+
   get allTypesEvent() {
     return this.offers.map((offer) => offer.type);
   }
 
   getOffersByType(type) {
-    const allOffers = this.offers;
-    return allOffers.find((offer) => offer.type === type);
+    return this.offers.find((offer) => offer.type === type);
   }
 
   getOfferById(type, itemsId) {
-    const offersType = this.getOffersByType(type);
-    return offersType.offers.filter((item) => itemsId.find((id) => item.id === id));
-  }
-
-  get destinations() {
-    return this.#destinations;
+    return this.getOffersByType(type).offers
+      .filter((item) => itemsId.find((id) => item.id === id));
   }
 
   getDestinationById(id) {
-    const allDestinations = this.destinations;
-    return allDestinations.find((item) => item.id === id);
-  }
-
-  get allNamesDestination() {
-    return this.destinations.map((destination) => destination.name);
+    return this.destinations.find((destination) => destination.id === id);
   }
 
   async updatePoint(updateType, update) {
@@ -131,9 +129,7 @@ export default class PointsModel extends Observable {
       pointId: point['id'],
       basePrice: point['base_price'],
       dateFrom: point['date_from'],
-      //  !== null ? new Date(point['date_from']) : point['date_from'],
       dateTo: point['date_to'],
-      //  !== null ? new Date(point['date_to']) : point['date_to'],
       isFavorite: point['is_favorite'],
     };
 
