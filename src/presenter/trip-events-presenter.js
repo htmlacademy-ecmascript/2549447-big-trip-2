@@ -4,11 +4,12 @@ import EmptyPointsListView from '../view/empty-points-list-view.js';
 import LoadingView from '../view/loading-view.js';
 import TripEventPresenter from './trip-event-presenter.js';
 import NewTripEventPresenter from './new-trip-event-presenter.js';
+import UiBlocker from '../framework/ui-blocker/ui-blocker.js';
 import { remove, render, RenderPosition } from '../framework/render.js';
 import { generateSortTypesList } from '../utils/sort.js';
 import { sortPointsByDay, sortPointsByTime, sortPointsByPrice } from '../utils/point.js';
 import { filter } from '../utils/filter.js';
-import { FilterType, SortingType, UpdateType, UserAction, NewPoint } from '../const.js';
+import { FilterType, SortingType, UpdateType, UserAction, TimeLimit } from '../const.js';
 
 export default class TripEventsPresenter {
   #tripEventsContainer = null;
@@ -20,6 +21,10 @@ export default class TripEventsPresenter {
   #tripPointListComponent = new TripPointListView();
   #loadingComponent = new LoadingView();
   #emptyPointsListComponent = null;
+  #uiBlocker = new UiBlocker({
+    lowerLimit: TimeLimit.LOWER_LIMIT,
+    upperLimit: TimeLimit.UPPER_LIMIT
+  });
 
   #pointPresentersList = new Map();
   #newTripEventPresenter = null;
@@ -27,7 +32,7 @@ export default class TripEventsPresenter {
   #filterType = FilterType.EVERYTHING;
   #isLoading = true;
 
-  constructor({ tripEventsContainer, pointsModel, filterModel, onNewPointDestroy}) {
+  constructor({ tripEventsContainer, pointsModel, filterModel, onNewPointDestroy }) {
     this.#tripEventsContainer = tripEventsContainer;
     this.#pointsModel = pointsModel;
     this.#filterModel = filterModel;
@@ -35,10 +40,6 @@ export default class TripEventsPresenter {
     this.#newTripEventPresenter = new NewTripEventPresenter({
       onDataChange: this.#handleViewAction,
       onDestroy: onNewPointDestroy,
-      offersByType: this.#pointsModel.getOffersByType(NewPoint.type),
-      allTypesEvent: this.#pointsModel.allTypesEvent,
-      allNamesDestination: this.#pointsModel.allNamesDestination,
-      pointsModel: this.#pointsModel,
     });
 
     this.#pointsModel.addObserver(this.#handleModelEvent);
@@ -64,11 +65,9 @@ export default class TripEventsPresenter {
   }
 
   createNewPoint() {
-    console.log(this.#pointsModel.getOffersByType(NewPoint.type));
-
     this.#currentSortType = SortingType.DAY;
     this.#filterModel.setFilter(UpdateType.MAJOR, FilterType.EVERYTHING);
-    this.#newTripEventPresenter.init();
+    this.#newTripEventPresenter.init(this.#pointsModel);
   }
 
   #isCountFiltersEmpty() {
@@ -134,18 +133,37 @@ export default class TripEventsPresenter {
     this.#pointPresentersList.forEach((pointPresenter) => pointPresenter.resetView());
   };
 
-  #handleViewAction = (actionType, updateType, update) => {
+  #handleViewAction = async (actionType, updateType, update) => {
+    this.#uiBlocker.block();
+
     switch (actionType) {
       case UserAction.UPDATE_POINT:
-        this.#pointsModel.updatePoint(updateType, update);
+        this.#pointPresentersList.get(update.pointId).setSaving();
+        try {
+          await this.#pointsModel.updatePoint(updateType, update);
+        } catch(err) {
+          this.#pointPresentersList.get(update.pointId).setAborting();
+        }
         break;
       case UserAction.ADD_POINT:
-        this.#pointsModel.addPoint(updateType, update);
+        this.#newTripEventPresenter.setSaving();
+        try {
+          await this.#pointsModel.addPoint(updateType, update);
+        } catch(err) {
+          this.#newTripEventPresenter.setAborting();
+        }
         break;
       case UserAction.DELETE_POINT:
-        this.#pointsModel.deletePoint(updateType, update);
+        this.#pointPresentersList.get(update.pointId).setDeleting();
+        try {
+          await this.#pointsModel.deletePoint(updateType, update);
+        } catch(err) {
+          this.#pointPresentersList.get(update.pointId).setAborting();
+        }
         break;
     }
+
+    this.#uiBlocker.unblock();
   };
 
   #handleModelEvent = (updateType, data) => {

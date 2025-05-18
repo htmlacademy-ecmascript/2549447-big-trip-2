@@ -1,9 +1,8 @@
 import TripPointListView from '../view/trip-point-list-view.js';
 import EmptyPointsListView from '../view/empty-points-list-view.js';
-import { remove, render, RenderPosition } from '../framework/render.js';
 import EditPointView from '../view/edit-point-view.js';
-
-import { UserAction, UpdateType, Mode, FilterType, NewPoint, DestinationOfNewPoint } from '../const.js';
+import { remove, render, RenderPosition } from '../framework/render.js';
+import { UserAction, UpdateType, Mode, FilterType, NewPoint } from '../const.js';
 
 export default class NewTripEventPresenter {
   #tripEventsListElement = null;
@@ -11,27 +10,18 @@ export default class NewTripEventPresenter {
   #emptyPointsListElements = null;
   #handleDataChange = null;
   #handleDestroy = null;
-  #offersByType = null;
-  #allTypesEvent = null;
-  #allNamesDestination = null;
-  #pointsModel = null;
 
   #tripPointListComponent = new TripPointListView();
   #emptyPointsListComponent = new EmptyPointsListView({ filterType: FilterType.EVERYTHING });
   #newPointComponent = null;
   #mode = Mode.ADDING;
 
-  constructor({ onDataChange, onDestroy, offersByType, allTypesEvent, allNamesDestination }) {
+  constructor({ onDataChange, onDestroy }) {
     this.#handleDataChange = onDataChange;
     this.#handleDestroy = onDestroy;
-    this.#offersByType = offersByType;
-    this.#allTypesEvent = allTypesEvent;
-    this.#allNamesDestination = allNamesDestination;
   }
 
-  init() {
-    console.log(this.#offersByType);
-
+  init(pointsModel) {
     if (this.#newPointComponent !== null) {
       return;
     }
@@ -40,11 +30,10 @@ export default class NewTripEventPresenter {
       point: NewPoint,
       onFormSubmit: this.#handleFormSubmit,
       onDeleteClick: this.#handleDeleteClick,
-      offersByType: this.#offersByType,
-      destination: DestinationOfNewPoint,
-      allTypesEvent: this.#allTypesEvent,
-      allNamesDestination: this.#allNamesDestination,
-      pointsModel: this.#pointsModel,
+      offersByType: pointsModel.getOffersByType(NewPoint.type),
+      allTypesEvent: pointsModel.allTypesEvent,
+      allNamesDestination: pointsModel.allNamesDestination,
+      pointsModel: pointsModel,
       mode: this.#mode,
     });
 
@@ -55,20 +44,20 @@ export default class NewTripEventPresenter {
     document.addEventListener('keydown', this.#escKeyDownHandler);
 
     if (this.#emptyPointsListElements.length !== 0) {
-      this.deleteEmptyElement();
+      this.#deleteEmptyElement();
       render(this.#tripPointListComponent, this.#tripEventsElement);
       render(this.#newPointComponent, this.#tripPointListComponent.element, RenderPosition.AFTERBEGIN);
       return;
     }
 
     if (this.#tripEventsListElement) {
-      this.deleteEmptyElement();
+      this.#deleteEmptyElement();
       render(this.#newPointComponent, this.#tripEventsListElement, RenderPosition.AFTERBEGIN);
     }
   }
 
   destroy() {
-    this.deleteEmptyElement();
+    this.#deleteEmptyElement();
 
     if (this.#newPointComponent === null) {
       return;
@@ -93,13 +82,34 @@ export default class NewTripEventPresenter {
     }
   }
 
-  deleteEmptyElement() {
+  setSaving() {
+    if (this.#mode === Mode.ADDING) {
+      this.#newPointComponent.updateElement({
+        isSaving: true,
+        isDisabled: true,
+      });
+    }
+  }
+
+  setAborting() {
+    const resetFormState = () => {
+      this.#newPointComponent.updateElement({
+        isDisabled: false,
+        isSaving: false,
+        isDeleting: false,
+      });
+    };
+
+    this.#newPointComponent.shake(resetFormState);
+  }
+
+  #deleteEmptyElement() {
     this.#emptyPointsListElements = document.querySelectorAll('.trip-events__msg');
     this.#emptyPointsListElements.forEach((el) => el.remove());
   }
 
   #handleFormSubmit = (point) => {
-    this.destroy();
+    this.#deleteEmptyElement();
 
     this.#handleDataChange(
       UserAction.ADD_POINT,

@@ -1,5 +1,3 @@
-const TRIP_POINT_CONUT = 3;
-
 const FilterType = {
   EVERYTHING: 'everything',
   FUTURE: 'future',
@@ -49,7 +47,7 @@ const EndPoint = {
 };
 
 const ApiService = {
-  AUTHORIZATION: 'Basic hsh3khjh3hkjh3kh',
+  AUTHORIZATION: 'Basic 3fdh56jgj63h',
   END_POINT: 'https://22.objects.htmlacademy.pro/big-trip',
 };
 
@@ -67,8 +65,12 @@ const DestinationOfNewPoint = {
   'pictures': [],
 };
 
+const TimeLimit = {
+  LOWER_LIMIT: 350,
+  UPPER_LIMIT: 1000,
+};
+
 export {
-  TRIP_POINT_CONUT,
   FilterType,
   SortingType,
   Mode,
@@ -79,4 +81,5 @@ export {
   Method,
   EndPoint,
   ApiService,
+  TimeLimit,
 };
