@@ -27,7 +27,6 @@ export default class TripEventsPresenter {
   });
 
   #pointPresentersList = new Map();
-  #tripEventPresenter = null;
   #newTripEventPresenter = null;
   #currentSortType = SortingType.DAY;
   #filterType = FilterType.EVERYTHING;
@@ -97,7 +96,7 @@ export default class TripEventsPresenter {
   }
 
   #renderPoint(point) {
-    this.#tripEventPresenter = new TripEventPresenter({
+    const tripEventPresenter = new TripEventPresenter({
       offersById: [...this.#pointsModel.getOfferById(point.type, point.offers)],
       destination: this.#pointsModel.getDestinationById(point.destination),
       offersByType: this.#pointsModel.getOffersByType(point.type),
@@ -109,8 +108,8 @@ export default class TripEventsPresenter {
       tripPointListComponent: this.#tripPointListComponent.element,
     });
 
-    this.#tripEventPresenter.init(point);
-    this.#pointPresentersList.set(point.pointId, this.#tripEventPresenter);
+    tripEventPresenter.init(point);
+    this.#pointPresentersList.set(point.pointId, tripEventPresenter);
   }
 
   #renderPoints(points) {

@@ -2,7 +2,7 @@ import TripPointListView from '../view/trip-point-list-view.js';
 import EmptyPointsListView from '../view/empty-points-list-view.js';
 import EditPointView from '../view/edit-point-view.js';
 import { remove, render, RenderPosition } from '../framework/render.js';
-import { UserAction, UpdateType, Mode, FilterType, NewPoint, DestinationOfNewPoint } from '../const.js';
+import { UserAction, UpdateType, Mode, FilterType, NewPoint } from '../const.js';
 
 export default class NewTripEventPresenter {
   #tripEventsListElement = null;
@@ -31,7 +31,6 @@ export default class NewTripEventPresenter {
       onFormSubmit: this.#handleFormSubmit,
       onDeleteClick: this.#handleDeleteClick,
       offersByType: pointsModel.getOffersByType(NewPoint.type),
-      destination: DestinationOfNewPoint,
       allTypesEvent: pointsModel.allTypesEvent,
       allNamesDestination: pointsModel.allNamesDestination,
       pointsModel: pointsModel,

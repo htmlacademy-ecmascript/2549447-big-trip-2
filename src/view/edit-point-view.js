@@ -2,7 +2,7 @@ import he from 'he';
 import AbstractStatefulView from '../framework/view/abstract-stateful-view.js';
 import { humanizeDateTimeEdit } from '../utils/point.js';
 import flatpickr from 'flatpickr';
-import { Mode } from '../const.js';
+import { Mode, DestinationOfNewPoint } from '../const.js';
 
 import 'flatpickr/dist/flatpickr.min.css';
 
@@ -104,7 +104,6 @@ function createEditPointTemplate(point, offersByType, destination, allTypesEvent
 
 export default class EditPointView extends AbstractStatefulView {
   #offersByType = null;
-  #destination = null;
   #handleEditClick = null;
   #handleFormSubmit = null;
   #allTypesEvent = null;
@@ -115,11 +114,10 @@ export default class EditPointView extends AbstractStatefulView {
   #handleDeleteClick = null;
   #mode = Mode.EDITING;
 
-  constructor ({ point, offersByType, destination, onEditClick, onFormSubmit, allTypesEvent, allNamesDestination, pointsModel, onDeleteClick, mode }) {
+  constructor ({ point, offersByType, onEditClick, onFormSubmit, allTypesEvent, allNamesDestination, pointsModel, onDeleteClick, mode }) {
     super();
     this._setState(EditPointView.parsePointToState({ point }));
     this.#offersByType = offersByType;
-    this.#destination = destination;
     this.#handleEditClick = onEditClick;
     this.#handleFormSubmit = onFormSubmit;
     this.#allTypesEvent = allTypesEvent;
@@ -151,8 +149,16 @@ export default class EditPointView extends AbstractStatefulView {
     this.#setDatepickers();
   }
 
+  get destination() {
+    if (this.#mode === Mode.EDITING) {
+      return this.#pointsModel.getDestinationById(this._state.destination);
+    } else {
+      return this.#pointsModel.getDestinationById(this._state.destination) || DestinationOfNewPoint;
+    }
+  }
+
   get template() {
-    return createEditPointTemplate(this._state, this.#offersByType, this.#destination, this.#allTypesEvent, this.#allNamesDestination, this.#mode);
+    return createEditPointTemplate(this._state, this.#offersByType, this.destination, this.#allTypesEvent, this.#allNamesDestination, this.#mode);
   }
 
   removeElement() {
@@ -208,8 +214,6 @@ export default class EditPointView extends AbstractStatefulView {
     }
 
     const targetDestinationId = targetDestination ? targetDestination.id : null;
-    const changedDestination = this.#pointsModel.getDestinationById(targetDestinationId);
-    this.#destination = changedDestination;
 
     this.updateElement({
       ...this._state,
@@ -251,6 +255,11 @@ export default class EditPointView extends AbstractStatefulView {
     });
   };
 
+  #formDeleteClickHandler = (evt) => {
+    evt.preventDefault();
+    this.#handleDeleteClick(EditPointView.parseStateToPoint(this._state));
+  };
+
   #dateFromChangeHandler = ([userDate]) => {
     this._setState({ ...this._state.point, dateFrom: userDate});
     this.#datepickerTo.set('minDate', this._state.dateFrom);
@@ -260,12 +269,6 @@ export default class EditPointView extends AbstractStatefulView {
     this._setState({ ...this._state.point, dateTo: userDate});
     this.#datepickerFrom.set('maxDate', this._state.dateTo);
   };
-
-  #formDeleteClickHandler = (evt) => {
-    evt.preventDefault();
-    this.#handleDeleteClick(EditPointView.parseStateToPoint(this._state));
-  };
-
 
   #setDatepickers = () => {
     const [ dateFromElement, dateToElement ] = this.element.querySelectorAll('.event__input--time');
@@ -297,17 +300,18 @@ export default class EditPointView extends AbstractStatefulView {
     );
   };
 
-  static parsePointToState = ({ point }) => ({
-    ...point,
-    offers: point.offers || [],
-    destination: point.destination,
-    isSaving: false,
-    isDeleting: false,
-    isDisabled: false,
-  });
+  static parsePointToState = ({ point }) => (
+    {
+      ...point,
+      offers: point.offers || [],
+      isSaving: false,
+      isDeleting: false,
+      isDisabled: false,
+    }
+  );
 
   static parseStateToPoint = (state) => {
-    const point = {...state};
+    const point = { ...state };
 
     delete point.isSaving;
     delete point.isDeleting;
