@@ -1,4 +1,4 @@
-import { render,replace, remove } from '../framework/render.js';
+import { render, replace, remove } from '../framework/render.js';
 import ListFilterView from '../view/list-filter-view.js';
 import { filter } from '../utils/filter.js';
 import { FilterType, UpdateType } from '../const.js';
@@ -20,7 +20,6 @@ export default class FilterPresenter {
 
   get filters() {
     const points = this.#pointsModel.points;
-
     return [
       {
         type: FilterType.EVERYTHING,

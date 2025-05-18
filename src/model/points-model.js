@@ -54,9 +54,9 @@ export default class PointsModel extends Observable {
     return this.offers.find((offer) => offer.type === type);
   }
 
-  getOfferById(type, itemsId) {
-    return this.getOffersByType(type).offers
-      .filter((item) => itemsId.find((id) => item.id === id));
+  getOffersById(pointType, pointOffers) {
+    return this.getOffersByType(pointType).offers
+      .filter((item) => pointOffers.find((id) => item.id === id));
   }
 
   getDestinationById(id) {
