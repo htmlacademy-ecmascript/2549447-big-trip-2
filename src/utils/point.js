@@ -2,6 +2,7 @@ import flatpickr from 'flatpickr';
 
 const TIME_FORMAT = 'H:i';
 const DATE_FORMAT_EVENT = 'M d';
+const DATE_FORMAT_FOR_INFO = 'd M';
 const DATE_TIME_FORMAT = 'Y-m-dTH:i';
 const DATE_YEAR_FORMAT = 'Y-m-d';
 const DATE_TIME_FORMAT_EDIT = 'y/m/d H:i';
@@ -12,6 +13,10 @@ function humanizePointTime(dueDate) {
 
 function humanizePointDate(dueDate) {
   return dueDate ? flatpickr.formatDate(new Date(dueDate), DATE_FORMAT_EVENT) : '';
+}
+
+function humanizePointDateForInfo(dueDate) {
+  return dueDate ? flatpickr.formatDate(new Date(dueDate), DATE_FORMAT_FOR_INFO) : '';
 }
 
 function humanizeDateTime(dueDate) {
@@ -54,4 +59,15 @@ function sortPointsByPrice(pointA, pointB) {
   return pointA.basePrice - pointB.basePrice;
 }
 
-export { humanizePointTime, humanizePointDate, humanizeDateTime, humanizeDateYear,humanizeDateTimeEdit, msToTime, sortPointsByDay, sortPointsByTime, sortPointsByPrice };
+export {
+  humanizePointTime,
+  humanizePointDate,
+  humanizePointDateForInfo,
+  humanizeDateTime,
+  humanizeDateYear,
+  humanizeDateTimeEdit,
+  msToTime,
+  sortPointsByDay,
+  sortPointsByTime,
+  sortPointsByPrice,
+};

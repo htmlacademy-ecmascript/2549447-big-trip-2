@@ -97,7 +97,7 @@ export default class TripEventsPresenter {
 
   #renderPoint(point) {
     const tripEventPresenter = new TripEventPresenter({
-      offersById: [...this.#pointsModel.getOfferById(point.type, point.offers)],
+      offersById: [...this.#pointsModel.getOffersById(point.type, point.offers)],
       destination: this.#pointsModel.getDestinationById(point.destination),
       offersByType: this.#pointsModel.getOffersByType(point.type),
       handlePointDataChange: this.#handleViewAction,
