@@ -47,16 +47,13 @@ const EndPoint = {
 };
 
 const ApiService = {
-  AUTHORIZATION: 'Basic 3fdh56jgj63h',
-  END_POINT: 'https://22.objects.htmlacademy.pro/big-trip',
+  AUTHORIZATION: 'Basic 3fdhgfj4645663h',
+  END_POINT: 'https://23.objects.htmlacademy.pro/big-trip',
 };
 
 const NewPoint = {
-  'basePrice': '',
-  'dateFrom': new Date(),
-  'dateTo': new Date(),
+  'basePrice': 0,
   'isFavorite': false,
-  'offers': [],
   'type': 'flight',
 };
 
