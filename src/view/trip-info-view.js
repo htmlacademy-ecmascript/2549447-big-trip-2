@@ -1,7 +1,7 @@
 import AbstractView from '../framework/view/abstract-view.js';
 
 function createTripInfoTemplate(formattedTripPath, formattedDurationOfTrip, fullCostOfTrip) {
-  return `${formattedTripPath || formattedDurationOfTrip || fullCostOfTrip ?
+  return `${fullCostOfTrip > 0 ?
     `<section class="trip-main__trip-info  trip-info">
       <div class="trip-info__main">
         <h1 class="trip-info__title">${ formattedTripPath }</h1>
