@@ -47,7 +47,7 @@ const EndPoint = {
 };
 
 const ApiService = {
-  AUTHORIZATION: 'Basic 3fdh58799gj63h',
+  AUTHORIZATION: 'Basic 3fdggds3799gj6h',
   END_POINT: 'https://23.objects.htmlacademy.pro/big-trip',
 };
 
