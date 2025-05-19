@@ -109,13 +109,13 @@ export default class NewTripEventPresenter {
   }
 
   #handleFormSubmit = (point) => {
-    this.#deleteEmptyElement();
-
     this.#handleDataChange(
       UserAction.ADD_POINT,
       UpdateType.MINOR,
       point,
     );
+
+    this.destroy();
   };
 
   #handleDeleteClick = () => {
