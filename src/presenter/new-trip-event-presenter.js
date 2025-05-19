@@ -115,7 +115,7 @@ export default class NewTripEventPresenter {
       point,
     );
 
-    this.destroy();
+    this.#deleteEmptyElement();
   };
 
   #handleDeleteClick = () => {
