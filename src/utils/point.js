@@ -51,12 +51,11 @@ function sortPointsByDay(pointA, pointB) {
 }
 
 function sortPointsByTime(pointA, pointB) {
-  return (new Date(pointA.dateTo) - new Date(pointA.dateFrom))
-   - (new Date(pointB.dateTo) - new Date(pointB.dateFrom));
+  return (new Date(pointB.dateTo) - new Date(pointB.dateFrom)) - (new Date(pointA.dateTo) - new Date(pointA.dateFrom));
 }
 
 function sortPointsByPrice(pointA, pointB) {
-  return pointA.basePrice - pointB.basePrice;
+  return pointB.basePrice - pointA.basePrice;
 }
 
 export {
