@@ -1,5 +1,10 @@
 import flatpickr from 'flatpickr';
 
+const MS_IN_SEC = 1000;
+const SEC_IN_MIN = 60;
+const SEC_IN_HOUR = 3600;
+const HOURS_IN_DAY = 24;
+
 const TIME_FORMAT = 'H:i';
 const DATE_FORMAT_EVENT = 'M d';
 const DATE_FORMAT_FOR_INFO = 'd M';
@@ -32,9 +37,9 @@ function humanizeDateTimeEdit(dueDate) {
 }
 
 function msToTime(duration) {
-  let days = Math.floor(duration / (1000 * 60 * 60 * 24));
-  let hours = Math.floor((duration / (1000 * 60 * 60)) % 24);
-  let minutes = Math.floor((duration / (1000 * 60)) % 60);
+  let days = Math.floor(duration / (MS_IN_SEC * SEC_IN_HOUR * HOURS_IN_DAY));
+  let hours = Math.floor((duration / (MS_IN_SEC * SEC_IN_HOUR)) % HOURS_IN_DAY);
+  let minutes = Math.floor((duration / (MS_IN_SEC * SEC_IN_MIN)) % SEC_IN_MIN);
 
   days = (days < 10) ? `0${ days }` : days;
   hours = (hours < 10) ? `0${ hours }` : hours;
