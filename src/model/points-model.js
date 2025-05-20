@@ -27,6 +27,8 @@ export default class PointsModel extends Observable {
       this.#destinations = [];
 
       this._notify(UpdateType.ERROR);
+
+      throw new Error('Can\'t get points');
     }
   }
 
