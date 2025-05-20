@@ -13,6 +13,8 @@ import { filter } from '../utils/filter.js';
 import { FilterType, SortingType, UpdateType, UserAction, TimeLimit } from '../const.js';
 
 export default class TripEventsPresenter {
+  #addNewPointBtnElement = document.querySelector('.trip-main__event-add-btn');
+
   #tripEventsContainer = null;
 
   #pointsModel = null;
@@ -187,11 +189,13 @@ export default class TripEventsPresenter {
         this.#renderPointsList();
         break;
       case UpdateType.INIT:
+        this.#addNewPointBtnElement.disabled = false;
         this.#isLoading = false;
         remove(this.#loadingComponent);
         this.#renderPointsList();
         break;
       case UpdateType.ERROR:
+        this.#addNewPointBtnElement.disabled = true;
         this.#isLoading = false;
         remove(this.#loadingComponent);
         this.#isErrorLoading = true;
